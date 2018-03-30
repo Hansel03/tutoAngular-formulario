@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" [ngClass]="{'has-danger': apellido.errors?.required && apellido.touched || apellido.errors?.minlength}">
       <label class="col-2 col-form-label">Apellido</label>
       <div class="col-8">
 
@@ -37,10 +37,10 @@
                minlength="5"
                required
                #apellido="ngModel">
-            <div *ngIf="apellido.errors?.required && apellido.touched">
+            <div *ngIf="apellido.errors?.required && apellido.touched" class="form-control-feedback">
                 Este campo es requerido
             </div>
-            <div *ngIf="apellido.errors?.minlength">
+            <div *ngIf="apellido.errors?.minlength" class="form-control-feedback">
                 Por lo menos {{apellido.errors.minlength.requiredLength}} caracteres
             </div>
       </div>
@@ -48,7 +48,7 @@
 
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="{'has-danger': email.errors?.required && email.touched || email.errors?.pattern}">
     <label class="col-2 col-form-label">Correo</label>
     <div class="col-md-8">
 
@@ -60,10 +60,10 @@
              required
              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
              #email="ngModel">
-             <div *ngIf="email.errors?.required && email.touched">
+             <div *ngIf="email.errors?.required && email.touched" class="form-control-feedback">
                 Este campo es requerido
             </div>
-            <div *ngIf="email.errors?.pattern">
+            <div *ngIf="email.errors?.pattern" class="form-control-feedback">
                 Dirección de correo invalida
             </div>
             
@@ -71,6 +71,48 @@
   </div>
 
 
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Pais</label>
+    <div class="col-md-8">
+        <select name="pais" class="form-control" [(ngModel)]="usuario.pais">
+            <option value="">Seleccione un pais</option>
+            <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.nombre}}</option>
+        </select>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+        <label class="col-2 col-form-label">Sexo</label>
+        <div class="col-md-8">
+                <label *ngFor="let s of sexos" class="custom-control custom-radio">
+                        <input [(ngModel)]="usuario.sexo"
+                         type="radio"  
+                         name="sexo"
+                         [value]="s"
+                         class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-label">{{s}}</span>
+                </label>
+        </div>
+  </div>
+
+
+  <div class="form-group row">
+        <label class="col-2 col-form-label">Acepta</label>
+        <div class="col-md-8">
+                <label class="custom-control custom-checkbox">
+                        <input [(ngModel)]="usuario.acepta"
+                        name="acepta"
+                        required
+                        type="checkbox"
+                        class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Acepta las condiciones</span>
+                </label>
+        </div>
+  </div>
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
@@ -85,3 +127,6 @@
   </div>
 
 </form>
+
+
+<pre>{{usuario|json}}</pre>
