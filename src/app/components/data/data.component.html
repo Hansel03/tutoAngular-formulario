@@ -2,9 +2,9 @@
 <hr> 
 <form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
-  <div>
+  <div formGroupName="nombreCompleto">
 
-    <div class="form-group row" [ngClass]="{'has-danger': forma.get('nombre').invalid }">
+    <div class="form-group row" [ngClass]="{'has-danger': forma.get('nombreCompleto.nombre').invalid }">
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
 
@@ -12,11 +12,11 @@
                type="text"
                placeholder="Nombre"
                formControlName="nombre">
-               <div *ngIf="forma.controls['nombre'].errors?.required"
+              <div *ngIf="forma.get('nombreCompleto.nombre').errors?.required"
                 class="form-control-feedback">
                    El nombre es requerido
                </div>
-               <div *ngIf="forma.controls['nombre'].errors?.minlength"
+               <div *ngIf="forma.get('nombreCompleto.nombre').errors?.minlength"
                class="form-control-feedback">
                    Por lo menos 3 caracteres
                </div>

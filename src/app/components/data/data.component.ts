@@ -10,14 +10,25 @@ export class DataComponent {
     /*Definicion del formulario*/
     forma: FormGroup;
 
+    usuario: Object = {
+        nombreCompleto: {
+            nombre: 'Hansel',
+            apellido: 'Suarez'
+        },
+        email: 'hansel@hotmail.com'
+    };
+
     constructor() {
+        console.log(this.usuario);
         /* El FormControl recibde tres parametros
         1.valor
         2.validaciones
         3. validaciones asincronas */
         this.forma = new FormGroup({
-            'nombre': new FormControl('Gernando', [Validators.required, Validators.minLength(3)]),
-            'apellido': new FormControl('', [Validators.required, Validators.minLength(3)]),
+            'nombreCompleto': new FormGroup({
+                'nombre': new FormControl('Gernando', [Validators.required, Validators.minLength(3)]),
+                'apellido': new FormControl('', [Validators.required, Validators.minLength(3)])
+            }),
             'email': new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])
         });
     }
