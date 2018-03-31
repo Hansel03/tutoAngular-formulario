@@ -36,11 +36,18 @@ export class DataComponent {
             ),
             'pasaTiempos': new FormArray([
                 new FormControl('Correr', Validators.required)
-            ])
+            ]),
+            'password1': new FormControl('', Validators.required),
+            'password2': new FormControl()
         });
 
         /*Cargamos los valores por defecto del objeto usuario */
         /* this.forma.setValue(this.usuario);*/
+
+        this.forma.controls['password2'].setValidators([
+            Validators.required,
+            this.noIgual.bind(this.forma)
+        ]);
     }
 
 
@@ -65,6 +72,16 @@ export class DataComponent {
         if (controls.value === 'herrera') {
             return {
                 noherrera: true
+            };
+        }
+        return null;
+    }
+
+    noIgual(controls: FormControl): { [s: string]: boolean } {
+        const forma: any = this;
+        if (controls.value !== forma.controls['password1'].value) {
+            return {
+                noiguales: true
             };
         }
         return null;
