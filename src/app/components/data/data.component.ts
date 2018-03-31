@@ -16,8 +16,8 @@ export class DataComponent {
         2.validaciones
         3. validaciones asincronas */
         this.forma = new FormGroup({
-            'nombre': new FormControl('Gernando', Validators.required),
-            'apellido': new FormControl('', Validators.required),
+            'nombre': new FormControl('Gernando', [Validators.required, Validators.minLength(3)]),
+            'apellido': new FormControl('', [Validators.required, Validators.minLength(3)]),
             'email': new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])
         });
     }
