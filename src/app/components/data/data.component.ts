@@ -16,8 +16,7 @@ export class DataComponent {
             nombre: 'Hansel',
             apellido: 'Suarez'
         },
-        email: 'hansel@hotmail.com',
-        /*pasaTiempos: ['Correr', 'Dormir', 'Comer']*/
+        email: 'hansel@hotmail.com'
     };
 
     constructor() {
@@ -61,24 +60,38 @@ export class DataComponent {
 
     }
 
-
+    /**
+     * Funcion para mostrar los campos del formulario
+     * @memberof DataComponent.guardarCambios
+     */
     guardarCambios() {
         console.log(this.forma);
         console.log(this.forma.value);
     }
-
+    /**
+     * Funcion para limpiar los campos del formulario
+     * @memberof DataComponent.limpiar
+     */
     limpiar() {
         /*Resetea el formulario a su forma inicial, sin haberlo tocado */
         this.forma.reset();
     }
 
-
+    /**
+     * Funcion para agregar otro campo para pasatiempos
+     * @memberof DataComponent.agregarPasatiempo
+     */
     agregarPasatiempo() {
         (<FormArray>this.forma.controls['pasaTiempos']).push(
             new FormControl('', Validators.required)
         );
     }
-
+    /**
+     * Funcion que valida que no se pueda digitar el apellido herrera
+     * @param {FormControl} control
+     * @returns {{ [s: string]: boolean }}
+     * @memberof DataComponent.noHerrera
+     */
     noHerrera(control: FormControl): { [s: string]: boolean } {
         if (control.value === 'herrera') {
             return {
@@ -87,7 +100,12 @@ export class DataComponent {
         }
         return null;
     }
-
+    /**
+     * Funcion que valida que las contraseñas no sean iguales
+     * @param {FormControl} control
+     * @returns {{ [s: string]: boolean }}
+     * @memberof DataComponent.noIgual
+     */
     noIgual(control: FormControl): { [s: string]: boolean } {
         const forma: any = this;
         if (control.value !== forma.controls['password1'].value) {
@@ -97,12 +115,17 @@ export class DataComponent {
         }
         return null;
     }
-
+    /**
+     * Funcion que valida que el usuario ya exista
+     * @param {FormControl} control
+     * @returns {(Promise<any> | Observable<any>)}
+     * @memberof DataComponent.existeUsuario
+     */
     existeUsuario(control: FormControl): Promise<any> | Observable<any> {
         const promesa = new Promise(
             (resolve, reject) => {
                 setTimeout(() => {
-                    if (control.value === 'strider') {
+                    if (control.value === 'hansel') {
                         resolve({ existe: true });
                     } else {
                         resolve(null);

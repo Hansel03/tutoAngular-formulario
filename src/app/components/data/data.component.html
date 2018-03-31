@@ -4,7 +4,7 @@
 
   <div formGroupName="nombreCompleto">
 
-    <div class="form-group row" [ngClass]="{'has-danger': forma.get('nombreCompleto.nombre').invalid }">
+    <div class="form-group row" [ngClass]="{'has-danger': forma.get('nombreCompleto.nombre').invalid && forma.get('nombreCompleto.nombre').touched }">
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
 
@@ -12,18 +12,18 @@
                type="text"
                placeholder="Nombre"
                formControlName="nombre">
-              <div *ngIf="forma.get('nombreCompleto.nombre').errors?.required"
+              <div *ngIf="forma.get('nombreCompleto.nombre').errors?.required && forma.get('nombreCompleto.nombre').touched"
                 class="form-control-feedback">
                    El nombre es requerido
                </div>
-               <div *ngIf="forma.get('nombreCompleto.nombre').errors?.minlength"
+               <div *ngIf="forma.get('nombreCompleto.nombre').errors?.minlength && forma.get('nombreCompleto.nombre').touched"
                class="form-control-feedback">
                    Por lo menos 3 caracteres
                </div>
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" [ngClass]="{'has-danger': forma.get('nombreCompleto.apellido').invalid && forma.get('nombreCompleto.apellido').touched }">
       <label class="col-2 col-form-label">Apellido</label>
       <div class="col-8">
 
@@ -31,12 +31,24 @@
                type="text"
                placeholder="Apellido"
                formControlName="apellido">
+        <div *ngIf="forma.get('nombreCompleto.apellido').errors?.required && forma.get('nombreCompleto.apellido').touched"
+               class="form-control-feedback">
+                  El apellido es requerido
+        </div>
+        <div *ngIf="forma.get('nombreCompleto.apellido').errors?.minlength && forma.get('nombreCompleto.apellido').touched"
+              class="form-control-feedback">
+                  Por lo menos 3 caracteres
+        </div>
+        <div *ngIf="forma.get('nombreCompleto.apellido').errors?.noherrera"
+              class="form-control-feedback">
+                  El apellido no puede ser herrera
+        </div>
       </div>
     </div>
 
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="{'has-danger': forma.get('email').invalid && forma.get('email').touched }">
     <label class="col-2 col-form-label">Correo</label>
     <div class="col-md-8">
 
@@ -44,10 +56,18 @@
              type="email"
              placeholder="Correo electrónico"
              formControlName="email">
+        <div *ngIf="forma.get('email').errors?.required && forma.get('email').touched"
+             class="form-control-feedback">
+                El email es requerido
+      </div>
+      <div *ngIf="forma.get('email').errors?.pattern && forma.get('email').touched"
+             class="form-control-feedback">
+                Debe ser un correo valido
+      </div>
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="{'has-danger': forma.get('username').invalid && forma.get('username').touched }">
         <label class="col-2 col-form-label">username</label>
         <div class="col-md-8">
     
@@ -55,10 +75,22 @@
                  type="text"
                  placeholder="usuario"
                  formControlName="username">
+                <div *ngIf="forma.get('username').errors?.required && forma.get('username').touched"
+                class="form-control-feedback">
+                El usuario es requerido 
+                </div>
+                <div *ngIf="forma.get('username').errors?.existe && forma.get('username').touched"
+                class="form-control-feedback">
+                El usuario ya existe
+                </div>
+                <div *ngIf="forma.status === 'PENDING'"
+                class="form-control-feedback">
+                Consultando usuario...
+                </div>
         </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="{'has-danger': forma.get('password1').invalid && forma.get('password1').touched }">
         <label class="col-2 col-form-label">Password</label>
         <div class="col-md-8">
     
@@ -66,10 +98,14 @@
                  type="password"
                  placeholder="contraseña"
                  formControlName="password1">
+            <div *ngIf="forma.get('password1').errors?.required && forma.get('password1').touched"
+                 class="form-control-feedback">
+                 La contraseña es requerida 
+            </div>
         </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="{'has-danger': forma.get('password2').invalid && forma.get('password2').touched }">
         <label class="col-2 col-form-label">Repetir password</label>
         <div class="col-md-8">
     
@@ -77,6 +113,14 @@
                  type="password"
                  placeholder="Repetir contraseña"
                  formControlName="password2">
+            <div *ngIf="forma.get('password2').errors?.required && forma.get('password2').touched"
+                 class="form-control-feedback">
+                Debe confirmar la contraseña
+            </div>
+            <div *ngIf="forma.get('password2').errors?.noiguales && forma.get('password2').touched && forma.get('password1').value"
+            class="form-control-feedback">
+           Las contraseñas no coinciden
+       </div>
         </div>
   </div>
 
