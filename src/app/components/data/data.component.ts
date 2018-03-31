@@ -27,7 +27,8 @@ export class DataComponent {
         this.forma = new FormGroup({
             'nombreCompleto': new FormGroup({
                 'nombre': new FormControl('', [Validators.required, Validators.minLength(3)]),
-                'apellido': new FormControl('', [Validators.required, Validators.minLength(3)])
+                'apellido': new FormControl('',
+                    [Validators.required, Validators.minLength(3), this.noHerrera])
             }),
             'email': new FormControl(
                 '',
@@ -58,6 +59,15 @@ export class DataComponent {
         (<FormArray>this.forma.controls['pasaTiempos']).push(
             new FormControl('', Validators.required)
         );
+    }
+
+    noHerrera(controls: FormControl): { [s: string]: boolean } {
+        if (controls.value === 'herrera') {
+            return {
+                noherrera: true
+            };
+        }
+        return null;
     }
 
 
